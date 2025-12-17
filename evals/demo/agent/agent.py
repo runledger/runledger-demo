@@ -1,9 +1,11 @@
 import json
 import sys
 
+
 def send(payload):
     sys.stdout.write(json.dumps(payload) + "\n")
     sys.stdout.flush()
+
 
 for line in sys.stdin:
     line = line.strip()
@@ -12,7 +14,22 @@ for line in sys.stdin:
     msg = json.loads(line)
     if msg.get("type") == "task_start":
         ticket = msg.get("input", {}).get("ticket", "")
-        send({"type": "tool_call", "name": "search_docs", "call_id": "c1", "args": {"q": ticket}})
+        send(
+            {
+                "type": "tool_call",
+                "name": "create_issue",
+                "call_id": "c1",
+                "args": {"title": ticket},
+            }
+        )
     elif msg.get("type") == "tool_result":
-        send({"type": "final_output", "output": {"category": "account", "reply": "Reset password instructions sent."}})
+        send(
+            {
+                "type": "final_output",
+                "output": {
+                    "category": "account",
+                    "reply": "Reset password instructions sent.",
+                },
+            }
+        )
         break
