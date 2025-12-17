@@ -11,7 +11,7 @@ assertions:
   schema_path: schema.json
 budgets:
   max_wall_ms: 20000
-  max_tool_calls: 1
+  max_tool_calls: 0
   max_tool_errors: 0
 regression:
   min_pass_rate: 1.0
